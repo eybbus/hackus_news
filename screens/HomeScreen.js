@@ -1,10 +1,11 @@
 import React from 'react';
 import {
-  StyleSheet, Text, View, ActivityIndicator,
+  StyleSheet, View, ActivityIndicator, FlatList,
 } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import fetchNews from '../actions/fetchNews';
+import NewsItem from '../components/NewsItem';
 
 const styles = StyleSheet.create({
   container: {
@@ -28,10 +29,24 @@ class HomeScreen extends React.Component {
     this.props.fetchNews();
   }
 
+  setupNews = item => ({
+    id: item.objectID,
+    title: item.title,
+    url: item.url,
+    author: item.author,
+    points: item.points,
+    commentAmount: item.num_comments,
+  });
+
+  customKeyExtractor = item => item.objectID;
+
+  fetch = () => {
+    console.log(this.props);
+    this.props.fetchNews();
+  };
+
   render() {
     const { news, isFetching } = this.props.news;
-    console.log(news);
-
     if (isFetching) {
       return (
         <View style={styles.container}>
@@ -39,8 +54,15 @@ class HomeScreen extends React.Component {
         </View>
       );
     }
-    const titles = news.hits.map(item => <Text key={item.objectID}>{item.title}</Text>);
-    return <View style={styles.container}>{titles}</View>;
+    return (
+      <FlatList
+        data={news.hits}
+        renderItem={({ item }) => <NewsItem item={this.setupNews(item)} />}
+        keyExtractor={this.customKeyExtractor}
+        refreshing={isFetching}
+        onRefresh={this.fetch}
+      />
+    );
   }
 }
 
