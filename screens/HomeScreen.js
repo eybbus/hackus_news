@@ -41,7 +41,6 @@ class HomeScreen extends React.Component {
   customKeyExtractor = item => item.objectID;
 
   fetch = () => {
-    console.log(this.props);
     this.props.fetchNews();
   };
 
