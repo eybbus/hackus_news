@@ -7,6 +7,7 @@ import {
   AppLoading, Asset, Font, Icon,
 } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
+import Routes from './navigation/Routes';
 import configureStore from './configureStore';
 
 const store = configureStore();
@@ -62,7 +63,7 @@ export default class App extends React.Component {
       <Provider store={store}>
         <View style={styles.container}>
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          <AppNavigator />
+          <Routes />
         </View>
       </Provider>
     );

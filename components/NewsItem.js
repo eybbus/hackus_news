@@ -2,7 +2,9 @@ import React from 'react';
 import {
   StyleSheet, Text, View, TouchableOpacity,
 } from 'react-native';
+import { withNavigation } from 'react-navigation';
 import PropTypes from 'prop-types';
+import { FontAwesome } from '@expo/vector-icons';
 
 const styles = StyleSheet.create({
   container: {
@@ -15,6 +17,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth * 2,
   },
   buttonContainer: {
+    alignItems: 'center',
     padding: 15,
     paddingRight: 5,
   },
@@ -58,11 +61,19 @@ class NewsItem extends React.Component {
             {' comments'}
           </Text>
         </View>
-        {item.url && (
-          <TouchableOpacity style={styles.buttonContainer}>
-            <Text> article </Text>
-          </TouchableOpacity>
-        )}
+        <TouchableOpacity
+          style={styles.buttonContainer}
+          onPress={() => {
+            this.props.navigation.navigate('CommentList', {
+              itemId: item.id,
+              content: item,
+              hideTabBar: true,
+            });
+          }}
+        >
+          <FontAwesome name="comment-o" size={20} color="orange" />
+          <Text>{item.commentAmount}</Text>
+        </TouchableOpacity>
       </TouchableOpacity>
     );
   }
@@ -72,11 +83,11 @@ NewsItem.propTypes = {
   item: PropTypes.shape({
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
+    url: PropTypes.string,
     author: PropTypes.string.isRequired,
     points: PropTypes.number.isRequired,
     commentAmount: PropTypes.number.isRequired,
   }).isRequired,
 };
 
-export default NewsItem;
+export default withNavigation(NewsItem);

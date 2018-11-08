@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  StyleSheet, View, ActivityIndicator, Text,
+  StyleSheet, View, ActivityIndicator, Text, FlatList,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -13,20 +13,6 @@ const styles = StyleSheet.create({
     marginTop: 5,
     paddingHorizontal: 15,
   },
-  kidsContainer: {
-    paddingLeft: 8,
-    borderLeftWidth: 4,
-  },
-  contentText: {
-    borderBottomColor: 'rgb(200, 200, 200)',
-    paddingBottom: 4,
-    borderBottomWidth: StyleSheet.hairlineWidth * 1,
-  },
-  contentInfo: {
-    opacity: 0.8,
-    fontSize: 14,
-    paddingBottom: 5,
-  },
 });
 
 class CommentList extends React.Component {
@@ -37,18 +23,15 @@ class CommentList extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchComments(18390264);
+    const { navigation } = this.props;
+    const itemId = navigation.getParam('itemId');
+    this.props.fetchComments(itemId);
   }
 
   render() {
     const { comments, isFetching } = this.props.comments;
-    // console.log(this.props.comments.comments);
-    // console.log(comments);
 
-    // console.log(this.props);
-    // console.log(this.props.comments);
-
-    if (isFetching || comments.length === 0) {
+    if (isFetching) {
       return (
         <View style={styles.container}>
           <ActivityIndicator size="large" />
@@ -56,9 +39,16 @@ class CommentList extends React.Component {
       );
     }
     // console.log(comments);
-    const listItems = comments.map(comment => <Comments key={comment.id} detail={comment} />);
+    // const listItems = comments.map(comment => <Comments key={comment.id} detail={comment} />);
 
-    return <View>{listItems}</View>;
+    return (
+      <FlatList
+        style={{ flex: 1 }}
+        data={comments}
+        renderItem={({ item }) => <Comments detail={item} />}
+        keyExtractor={item => item.id.toString()}
+      />
+    );
   }
 }
 
