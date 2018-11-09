@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import FrontScreen from '../screens/FrontScreen';
 import CommentList from '../components/CommentList';
 import ShowScreen from '../screens/ShowScreen';
+import Color from '../constants/Colors';
 
 // import Tab1Details from './Tabs/Tab1Details';
 // import Tab2Screen from './Tabs/Tab2Screen';
@@ -17,12 +18,18 @@ const Tab1 = createStackNavigator({
     navigationOptions: {
       headerLeft: null,
       headerTitle: 'Front Page',
+      headerStyle: {
+        backgroundColor: Color.headerBackground,
+      },
     },
   },
   CommentList: {
     screen: CommentList,
     navigationOptions: {
       headerTitle: 'Comments',
+      headerStyle: {
+        backgroundColor: Color.headerBackground,
+      },
     },
   },
 });
@@ -33,12 +40,18 @@ const Tab2 = createStackNavigator({
     navigationOptions: {
       headerLeft: null,
       headerTitle: 'Show Page',
+      headerStyle: {
+        backgroundColor: Color.headerBackground,
+      },
     },
   },
   CommentList: {
     screen: CommentList,
     navigationOptions: {
       headerTitle: 'Comments',
+      headerStyle: {
+        backgroundColor: Color.headerBackground,
+      },
     },
   },
 });
@@ -72,12 +85,12 @@ const DashboardTabRoutes = createBottomTabNavigator(
       };
     },
     tabBarOptions: {
-      activeTintColor: '#6200EE',
-      inactiveTintColor: '#858585',
+      activeTintColor: Color.tabIconSelected,
+      inactiveTintColor: Color.tabIconDefault,
       style: {
         height: 60,
         paddingVertical: 5,
-        backgroundColor: '#fff',
+        backgroundColor: Color.tabBar,
       },
       labelStyle: {
         fontSize: 12,

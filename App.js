@@ -6,7 +6,7 @@ import {
 import {
   AppLoading, Asset, Font, Icon,
 } from 'expo';
-import AppNavigator from './navigation/AppNavigator';
+// import AppNavigator from './navigation/AppNavigator';
 import Routes from './navigation/Routes';
 import configureStore from './configureStore';
 
@@ -15,7 +15,7 @@ const store = configureStore();
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#eeee',
   },
 });
 

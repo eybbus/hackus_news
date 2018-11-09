@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
-import news from './news';
-import comments from './comments';
+import newsStore from './news';
+import commentsStore from './comments';
 
 const rootReducer = combineReducers({
-  news,
-  comments,
+  newsStore,
+  commentsStore,
 });
 
 export default rootReducer;

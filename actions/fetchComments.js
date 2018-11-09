@@ -23,7 +23,7 @@ function getCommentsFailure() {
   };
 }
 
-export default function fetchNews(id) {
+export function fetchComments(id) {
   return (dispatch) => {
     dispatch(getComments());
     return fetch(`http://hn.algolia.com/api/v1/items/${id}`)

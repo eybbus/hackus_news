@@ -31,11 +31,6 @@ const openLink = (_, href) => {
 };
 
 export default class Comment extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   render() {
     let childComments = null;
     const { detail } = this.props;
@@ -50,7 +45,7 @@ export default class Comment extends React.Component {
       ));
     }
 
-    const { id, author, text } = detail;
+    const { author, text } = detail;
     if (author === null) {
       return (
         <View
@@ -69,9 +64,10 @@ export default class Comment extends React.Component {
         style={[styles.container, detail.parent_id !== detail.story_id && { paddingHorizontal: 0 }]}
       >
         <Text style={styles.contentInfo}>
-          {'Time '}
-          {'by '}
           {author}
+          {' * '}
+          {'Time '}
+          {'ago'}
         </Text>
         <HTML onLinkPress={openLink} html={text} containerStyle={styles.contentText} />
         {childComments}

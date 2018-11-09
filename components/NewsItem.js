@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  StyleSheet, Text, View, TouchableOpacity,
+  StyleSheet, Text, View, TouchableOpacity, Linking,
 } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import PropTypes from 'prop-types';
@@ -36,44 +36,50 @@ const styles = StyleSheet.create({
 });
 
 class NewsItem extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {};
+  openLink(url) {
+    if (url === null) {
+      const { item } = this.props;
+      this.props.navigation.navigate('CommentList', {
+        itemId: item.id,
+        content: item,
+        hideTabBar: true,
+      });
+    } else {
+      Linking.openURL(url).catch(err => console.error('An error occurred', err));
+    }
   }
-
-  componentDidMount() {}
 
   render() {
     const { item } = this.props;
+
     return (
-      <TouchableOpacity style={styles.container}>
+      <TouchableOpacity style={styles.container} onPress={() => this.openLink(item.url)}>
         <View style={styles.contentContainer}>
           <Text key="title" numberOfLines={2} style={styles.title}>
-            {item.title.trim()}
+            {item.title}
           </Text>
           <Text key="subText" numberOfLines={1} style={styles.subText}>
             {item.points}
             {' points by '}
             {item.author}
-            {' | '}
-            {item.commentAmount}
-            {' comments'}
+            {item.commentAmount === null ? null : ` | ${item.commentAmount} comments`}
           </Text>
         </View>
-        <TouchableOpacity
-          style={styles.buttonContainer}
-          onPress={() => {
-            this.props.navigation.navigate('CommentList', {
-              itemId: item.id,
-              content: item,
-              hideTabBar: true,
-            });
-          }}
-        >
-          <FontAwesome name="comment-o" size={20} color="orange" />
-          <Text>{item.commentAmount}</Text>
-        </TouchableOpacity>
+        {item.commentAmount === null ? null : (
+          <TouchableOpacity
+            style={styles.buttonContainer}
+            onPress={() => {
+              this.props.navigation.navigate('CommentList', {
+                itemId: item.id,
+                content: item,
+                hideTabBar: true,
+              });
+            }}
+          >
+            <FontAwesome name="comment-o" size={20} color="orange" />
+            <Text>{item.commentAmount}</Text>
+          </TouchableOpacity>
+        )}
       </TouchableOpacity>
     );
   }
@@ -86,7 +92,8 @@ NewsItem.propTypes = {
     url: PropTypes.string,
     author: PropTypes.string.isRequired,
     points: PropTypes.number.isRequired,
-    commentAmount: PropTypes.number.isRequired,
+    commentAmount: PropTypes.number,
+    story: PropTypes.string,
   }).isRequired,
 };
 

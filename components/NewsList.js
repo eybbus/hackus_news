@@ -1,25 +1,55 @@
 import React from 'react';
 import {
-  StyleSheet, View, ActivityIndicator, FlatList,
+  StyleSheet,
+  View,
+  ActivityIndicator,
+  FlatList,
+  TouchableHighlight,
+  Text,
 } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import fetchNews from '../actions/fetchNews';
+import { fetchNews, fetchNewNews } from '../actions/fetchNews';
+import Color from '../constants/Colors';
+
 import NewsItem from './NewsItem';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#eee',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
   },
+  footerStyle: {
+    flex: 1,
+    backgroundColor: Color.footerBackground,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 40,
+  },
+  footerText: {
+    color: Color.footerText,
+  },
 });
 
 class NewsList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.page = 0;
+  }
+
   componentDidMount() {
-    this.props.fetchNews();
+    this.props.fetchNewNews();
+  }
+
+  getData() {
+    console.log('Fetching more news');
+
+    this.page += 1;
+    this.props.fetchNews(this.page);
   }
 
   setupNews = item => ({
@@ -29,30 +59,54 @@ class NewsList extends React.Component {
     author: item.author,
     points: item.points,
     commentAmount: item.num_comments,
+    story: item.story_text,
   });
 
   customKeyExtractor = item => item.objectID;
 
-  fetch = () => {
-    this.props.fetchNews();
+  fetchReset = () => {
+    this.props.fetchNewNews();
+    this.page = 0;
   };
 
   render() {
-    const { news, isFetching } = this.props.news;
+    const { news, isFetching, isFetchingMore } = this.props.store;
+    const { hits, nbPages } = news;
+    console.log(this.page);
+    console.log(Object.keys(news));
+    console.log(`nbHits: ${news.hits.length}`);
+    console.log(`nbPages: ${nbPages} - ` + `page: ${this.page}`);
+
     if (isFetching) {
       return (
         <View style={styles.container}>
-          <ActivityIndicator size="large" />
+          <ActivityIndicator size="large" color={Color.activityIndicator} />
         </View>
       );
     }
     return (
       <FlatList
-        data={news.hits}
+        data={hits}
         renderItem={({ item }) => <NewsItem item={this.setupNews(item)} />}
         keyExtractor={this.customKeyExtractor}
         refreshing={isFetching}
-        onRefresh={this.fetch}
+        onRefresh={() => this.fetchReset()}
+        extraData={this.props}
+        ListFooterComponent={
+          isFetchingMore === true ? (
+            <View style={styles.footerStyle}>
+              <ActivityIndicator size="small" color={Color.activityIndicator} />
+            </View>
+          ) : nbPages == this.page + 1 ? (
+            <TouchableHighlight style={styles.footerStyle}>
+              <Text style={styles.footerText}>You reached the end!</Text>
+            </TouchableHighlight>
+          ) : (
+            <TouchableHighlight style={styles.footerStyle} onPress={() => this.getData()}>
+              <Text style={styles.footerText}>Load more?</Text>
+            </TouchableHighlight>
+          )
+        }
       />
     );
   }
@@ -60,13 +114,13 @@ class NewsList extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    news: state.news,
+    store: state.newsStore,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    ...bindActionCreators({ fetchNews }, dispatch),
+    ...bindActionCreators({ fetchNews, fetchNewNews }, dispatch),
   };
 }
 
