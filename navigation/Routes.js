@@ -5,15 +5,12 @@ import { Ionicons } from '@expo/vector-icons';
 import FrontScreen from '../screens/FrontScreen';
 import CommentList from '../components/CommentList';
 import ShowScreen from '../screens/ShowScreen';
+import AskScreen from '../screens/AskScreen';
+import JobsScreen from '../screens/JobsScreen';
 import Color from '../constants/Colors';
 
-// import Tab1Details from './Tabs/Tab1Details';
-// import Tab2Screen from './Tabs/Tab2Screen';
-// import CustomHeader from '../../components/CustomHeader';
-// import HeaderStyles from '../../headerStyles';
-
-const Tab1 = createStackNavigator({
-  Tab1: {
+const Front = createStackNavigator({
+  Front: {
     screen: FrontScreen,
     navigationOptions: {
       headerLeft: null,
@@ -34,8 +31,8 @@ const Tab1 = createStackNavigator({
   },
 });
 
-const Tab2 = createStackNavigator({
-  Tab2: {
+const Show = createStackNavigator({
+  Show: {
     screen: ShowScreen,
     navigationOptions: {
       headerLeft: null,
@@ -56,13 +53,51 @@ const Tab2 = createStackNavigator({
   },
 });
 
+const Ask = createStackNavigator({
+  Ask: {
+    screen: AskScreen,
+    navigationOptions: {
+      headerLeft: null,
+      headerTitle: 'Ask HN',
+      headerStyle: {
+        backgroundColor: Color.headerBackground,
+      },
+    },
+  },
+  CommentList: {
+    screen: CommentList,
+    navigationOptions: {
+      headerTitle: 'Comments',
+      headerStyle: {
+        backgroundColor: Color.headerBackground,
+      },
+    },
+  },
+});
+
+const Jobs = createStackNavigator({
+  Jobs: {
+    screen: JobsScreen,
+    navigationOptions: {
+      headerLeft: null,
+      headerTitle: 'Ask HN',
+      headerStyle: {
+        backgroundColor: Color.headerBackground,
+      },
+    },
+  },
+});
+
+// Creates the Bottom tabs
 const DashboardTabRoutes = createBottomTabNavigator(
   {
-    Tab1,
-    Tab2,
+    Front,
+    Show,
+    Ask,
+    Jobs,
   },
   {
-    initialRouteName: 'Tab1',
+    initialRouteName: 'Front',
     navigationOptions: ({ navigation }) => {
       const { routeName, routes } = navigation.state;
       const params = routes && routes[1] && routes[1].params;
@@ -70,9 +105,13 @@ const DashboardTabRoutes = createBottomTabNavigator(
         tabBarIcon: ({ focused, tintColor }) => {
           const { routeName } = navigation.state;
           let iconName;
-          if (routeName === 'Tab1') {
+          if (routeName === 'Front') {
             iconName = `ios-information-circle${focused ? '' : '-outline'}`;
-          } else if (routeName === 'Tab2') {
+          } else if (routeName === 'Show') {
+            iconName = `ios-options${focused ? '' : '-outline'}`;
+          } else if (routeName === 'Ask') {
+            iconName = `ios-options${focused ? '' : '-outline'}`;
+          } else if (routeName === 'Jobs') {
             iconName = `ios-options${focused ? '' : '-outline'}`;
           }
 
