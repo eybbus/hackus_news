@@ -1,17 +1,15 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text } from 'react-native';
-import NewsList from '../components/NewsList';
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 15,
-    backgroundColor: '#eee',
-  },
-});
+import SearchList from '../components/SearchList';
 
 export default class AskScreen extends React.Component {
+  static navigationOptions = {
+    title: 'Hackernews',
+    headerStyle: {
+      backgroundColor: '#ff6600',
+    },
+  };
+
   render() {
-    return <Text> Ask page </Text>;
+    return <SearchList type="ask_hn" />;
   }
 }

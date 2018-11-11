@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { fetchNews, fetchNewNews } from '../actions/fetchNews';
+import { fetchSearch, fetchMoreSearch } from '../actions/fetchSearch';
 import Color from '../constants/Colors';
 
 import NewsItem from './NewsItem';
@@ -35,21 +35,19 @@ const styles = StyleSheet.create({
   },
 });
 
-class NewsList extends React.Component {
+class SearchList extends React.Component {
   constructor(props) {
     super(props);
     this.page = 0;
   }
 
   componentDidMount() {
-    this.props.fetchNewNews();
+    this.props.fetchSearch('search_by_date', this.props.type, 0, undefined);
   }
 
   getData() {
-    console.log('Fetching more news');
-
     this.page += 1;
-    this.props.fetchNews(this.page);
+    this.props.fetchSearch('search_by_date', this.props.type, this.page, undefined);
   }
 
   setupNews = item => ({
@@ -65,17 +63,13 @@ class NewsList extends React.Component {
   customKeyExtractor = item => item.objectID;
 
   fetchReset = () => {
-    this.props.fetchNewNews();
+    this.props.fetchSearch('search_by_date', this.props.type, 0, undefined);
     this.page = 0;
   };
 
   render() {
-    const { news, isFetching, isFetchingMore } = this.props.store;
-    const { hits, nbPages } = news;
-    /*     console.log(this.page);
-    console.log(Object.keys(news));
-    console.log(`nbHits: ${news.hits.length}`);
-    console.log(`nbPages: ${nbPages} - ` + `page: ${this.page}`); */
+    const { search, isFetching, isFetchingMore } = this.props.store;
+    const { hits, nbPages } = search[this.props.type];
 
     if (isFetching) {
       return (
@@ -113,21 +107,18 @@ class NewsList extends React.Component {
 }
 
 function mapStateToProps(state) {
-  // console.log(state);
-  // console.log('-----------------------------------------------------');
-
   return {
-    store: state.newsStore,
+    store: state.searchStore,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    ...bindActionCreators({ fetchNews, fetchNewNews }, dispatch),
+    ...bindActionCreators({ fetchSearch, fetchMoreSearch }, dispatch),
   };
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(NewsList);
+)(SearchList);

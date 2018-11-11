@@ -1,17 +1,16 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text } from 'react-native';
-import NewsList from '../components/NewsList';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 15,
-    backgroundColor: '#eee',
-  },
-});
+import SearchList from '../components/SearchList';
 
 export default class JobsScreen extends React.Component {
+  static navigationOptions = {
+    title: 'Jobs',
+    headerStyle: {
+      backgroundColor: '#ff6600',
+    },
+  };
+
   render() {
-    return <Text> Jobs page </Text>;
+    return <SearchList type="job" />;
   }
 }

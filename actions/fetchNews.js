@@ -19,8 +19,6 @@ function getNewNews() {
 }
 
 function getNewsSuccess(data) {
-  console.log('newData:');
-  console.log(data.hits);
   return {
     type: FETCHING_NEWS_SUCCESS,
     data,

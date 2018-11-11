@@ -26,21 +26,19 @@ export default function newsReducer(state = initialState, action) {
         isFetching: true,
       };
     case FETCHING_NEWS_SUCCESS:
-      const test = [...state.news.hits, action.data.hits];
-      console.log(test);
       return {
         ...state,
-        isFetchingMore: false,
         news: { ...state.news, hits: [...state.news.hits, ...action.data.hits] },
+        isFetchingMore: false,
       };
     case FETCHING_NEWS_FAILURE:
       return {
         ...state,
+        isFetching: false,
         isFetchingMore: false,
         error: true,
       };
     case FETCHING_NEW_NEWS_SUCCESS:
-      console.log(...state);
       return {
         ...state,
         isFetching: false,
