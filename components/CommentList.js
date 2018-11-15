@@ -22,13 +22,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   storyContainer: {
+    paddingTop: 10,
     paddingHorizontal: 15,
+    paddingBottom: 10,
+    marginBottom: 10,
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     minHeight: 80,
-    borderBottomColor: 'rgb(220, 220, 220)',
-    borderBottomWidth: StyleSheet.hairlineWidth * 2,
+    borderBottomColor: Color.tabBar,
+    borderBottomWidth: StyleSheet.hairlineWidth * 4,
+    backgroundColor: Color.footerBackground,
   },
   contentContainer: {
     flex: 1,
@@ -36,7 +40,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    color: 'black',
+    color: '#eeeeee',
     paddingBottom: 5,
   },
   subText: {

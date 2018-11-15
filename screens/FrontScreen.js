@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
 
 export default class FrontScreen extends React.Component {
   static navigationOptions = {
-    title: 'Hackernews',
+    title: 'HN - Front Page',
   };
 
   render() {

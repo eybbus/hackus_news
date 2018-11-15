@@ -1,5 +1,6 @@
 const tintColor = '#2f95dc';
 const palette = ['#eeeeee', '#705441', '#617c93', '#fc8200', '#603c33'];
+
 export default {
   tintColor,
   tabIconDefault: '#eeeeee',
@@ -15,4 +16,7 @@ export default {
   activityIndicator: '#fc8200',
   footerBackground: '#617c93',
   footerText: '#eeeeee',
+  dropDownBackground: '#617c93',
+  dropdownText: '#eeeeee',
+  commentIndent: '#617c93',
 };

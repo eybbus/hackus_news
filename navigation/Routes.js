@@ -14,7 +14,6 @@ const Front = createStackNavigator({
     screen: FrontScreen,
     navigationOptions: {
       headerLeft: null,
-      headerTitle: 'Front Page',
       headerStyle: {
         backgroundColor: Color.headerBackground,
       },
@@ -36,7 +35,6 @@ const Show = createStackNavigator({
     screen: ShowScreen,
     navigationOptions: {
       headerLeft: null,
-      headerTitle: 'Show Page',
       headerStyle: {
         backgroundColor: Color.headerBackground,
       },
@@ -58,7 +56,6 @@ const Ask = createStackNavigator({
     screen: AskScreen,
     navigationOptions: {
       headerLeft: null,
-      headerTitle: 'Ask HN',
       headerStyle: {
         backgroundColor: Color.headerBackground,
       },
@@ -80,7 +77,6 @@ const Jobs = createStackNavigator({
     screen: JobsScreen,
     navigationOptions: {
       headerLeft: null,
-      headerTitle: 'Ask HN',
       headerStyle: {
         backgroundColor: Color.headerBackground,
       },

@@ -9,4 +9,5 @@ export default {
     height,
   },
   isSmallDevice: width < 375,
+  dropDownOptions: ['New', 'Day', 'Week', 'Month', 'Year', 'All time'],
 };

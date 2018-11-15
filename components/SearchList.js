@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import dayjs from 'dayjs';
 import { fetchSearch, fetchMoreSearch } from '../actions/fetchSearch';
 import Color from '../constants/Colors';
 
@@ -45,29 +46,82 @@ class SearchList extends React.Component {
     this.props.fetchSearch('search_by_date', this.props.type, 0, undefined);
   }
 
-  getData() {
-    this.page += 1;
-    this.props.fetchSearch('search_by_date', this.props.type, this.page, undefined);
+  componentDidUpdate(prevProps) {
+    if (this.props.sortBy !== prevProps.sortBy) {
+      this.fetchReset();
+    }
   }
 
-  setupNews = item => ({
-    id: item.objectID,
-    title: item.title,
-    url: item.url,
-    author: item.author,
-    points: item.points,
-    commentAmount: item.num_comments,
-    story: item.story_text,
-  });
+  getData() {
+    this.page += 1;
+    const unix = this.getNumerical();
+    if (unix === '') {
+      this.props.fetchSearch('search_by_date', this.props.type, this.page, undefined);
+    } else {
+      this.props.fetchSearch('search', this.props.type, this.page, unix);
+    }
+  }
 
-  customKeyExtractor = item => item.objectID;
+  getNumerical() {
+    const { sortBy } = this.props;
+    let unix = 0;
+    console.log(sortBy);
 
-  fetchReset = () => {
-    this.props.fetchSearch('search_by_date', this.props.type, 0, undefined);
+    if (sortBy === 'New') {
+      return '';
+    }
+    if (sortBy === 'Day') {
+      unix = dayjs()
+        .subtract(1, 'day')
+        .unix();
+    } else if (sortBy === 'Week') {
+      unix = dayjs()
+        .subtract(7, 'day')
+        .unix();
+    } else if (sortBy === 'Month') {
+      unix = dayjs()
+        .subtract(1, 'month')
+        .unix();
+    } else if (sortBy === 'Year') {
+      unix = dayjs()
+        .subtract(1, 'year')
+        .unix();
+    } else {
+      unix = 0;
+    }
+    console.log(`unix: ${unix}`);
+
+    return `created_at_i>${unix}`;
+  }
+
+  setupNews(item) {
+    return {
+      id: item.objectID,
+      title: item.title,
+      url: item.url,
+      author: item.author,
+      points: item.points,
+      commentAmount: item.num_comments,
+      story: item.story_text,
+    };
+  }
+
+  customKeyExtractor(item) {
+    return item.objectID;
+  }
+
+  fetchReset() {
+    const unix = this.getNumerical();
+    if (unix === '') {
+      this.props.fetchSearch('search_by_date', this.props.type, 0, undefined);
+    } else {
+      this.props.fetchSearch('search', this.props.type, 0, unix);
+    }
     this.page = 0;
-  };
+  }
 
   render() {
+    console.log(`searchlist prop: ${this.props.sortBy}`);
     const { search, isFetching, isFetchingMore } = this.props.store;
     const { hits, nbPages } = search[this.props.type];
 
