@@ -6,7 +6,6 @@ import {
 import {
   AppLoading, Asset, Font, Icon,
 } from 'expo';
-// import AppNavigator from './navigation/AppNavigator';
 import Routes from './navigation/Routes';
 import configureStore from './configureStore';
 

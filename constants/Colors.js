@@ -19,4 +19,6 @@ export default {
   dropDownBackground: '#617c93',
   dropdownText: '#eeeeee',
   commentIndent: '#617c93',
+  info: '#617c93',
+  infoText: '#eeeeee',
 };

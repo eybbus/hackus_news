@@ -74,13 +74,10 @@ class CommentList extends React.Component {
   render() {
     const { navigation } = this.props;
     const content = navigation.getParam('content');
-    console.log(content);
     const { comments, isFetching } = this.props.store;
     if (content.story === null) {
       content.story = '';
     }
-
-    console.log(content.story !== null);
 
     return (
       <FlatList

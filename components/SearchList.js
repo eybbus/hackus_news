@@ -65,7 +65,6 @@ class SearchList extends React.Component {
   getNumerical() {
     const { sortBy } = this.props;
     let unix = 0;
-    console.log(sortBy);
 
     if (sortBy === 'New') {
       return '';
@@ -89,7 +88,6 @@ class SearchList extends React.Component {
     } else {
       unix = 0;
     }
-    console.log(`unix: ${unix}`);
 
     return `created_at_i>${unix}`;
   }
@@ -121,7 +119,6 @@ class SearchList extends React.Component {
   }
 
   render() {
-    console.log(`searchlist prop: ${this.props.sortBy}`);
     const { search, isFetching, isFetchingMore } = this.props.store;
     const { hits, nbPages } = search[this.props.type];
 

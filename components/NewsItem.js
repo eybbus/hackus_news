@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  StyleSheet, Text, View, TouchableOpacity, Linking,
+  StyleSheet, Text, View, TouchableOpacity, Linking, AsyncStorage,
 } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import PropTypes from 'prop-types';
@@ -49,11 +49,46 @@ class NewsItem extends React.Component {
     }
   }
 
+  async saveLink(item) {
+    try {
+      const savedStories = await AsyncStorage.getItem('SAVED_STORIES');
+
+      const stories = savedStories ? JSON.parse(savedStories) : [];
+      stories.push(item);
+      try {
+        AsyncStorage.setItem('SAVED_STORIES', JSON.stringify(stories));
+      } catch (e) {
+        console.log('failed to save story');
+      }
+    } catch (e) {
+      console.log('failed to load storage');
+    }
+  }
+
+  async removeLink(item) {
+    try {
+      const savedStories = await AsyncStorage.getItem('SAVED_STORIES');
+
+      const stories = savedStories ? JSON.parse(savedStories).filter(obj => obj.id !== item.id) : [];
+      try {
+        AsyncStorage.setItem('SAVED_STORIES', JSON.stringify(stories));
+      } catch (e) {
+        console.log('failed to save story');
+      }
+    } catch (e) {
+      console.log('failed to load storage');
+    }
+  }
+
   render() {
-    const { item } = this.props;
+    const { item, removable } = this.props;
 
     return (
-      <TouchableOpacity style={styles.container} onPress={() => this.openLink(item.url)}>
+      <TouchableOpacity
+        style={styles.container}
+        onPress={() => this.openLink(item.url)}
+        onLongPress={removable ? () => this.removeLink(item) : () => this.saveLink(item)}
+      >
         <View style={styles.contentContainer}>
           <Text key="title" numberOfLines={2} style={styles.title}>
             {item.title}
@@ -95,6 +130,11 @@ NewsItem.propTypes = {
     commentAmount: PropTypes.number,
     story: PropTypes.string,
   }).isRequired,
+  removable: PropTypes.bool,
+};
+
+NewsItem.defaultProps = {
+  removable: false,
 };
 
 export default withNavigation(NewsItem);

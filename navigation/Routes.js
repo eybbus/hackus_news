@@ -1,5 +1,4 @@
 import React from 'react';
-import { View } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
 import FrontScreen from '../screens/FrontScreen';
@@ -7,6 +6,7 @@ import CommentList from '../components/CommentList';
 import ShowScreen from '../screens/ShowScreen';
 import AskScreen from '../screens/AskScreen';
 import JobsScreen from '../screens/JobsScreen';
+import SavedList from '../screens/SavedScreen';
 import Color from '../constants/Colors';
 
 const Front = createStackNavigator({
@@ -84,6 +84,27 @@ const Jobs = createStackNavigator({
   },
 });
 
+const Later = createStackNavigator({
+  Later: {
+    screen: SavedList,
+    navigationOptions: {
+      headerLeft: null,
+      headerStyle: {
+        backgroundColor: Color.headerBackground,
+      },
+    },
+  },
+  CommentList: {
+    screen: CommentList,
+    navigationOptions: {
+      headerTitle: 'Comments',
+      headerStyle: {
+        backgroundColor: Color.headerBackground,
+      },
+    },
+  },
+});
+
 // Creates the Bottom tabs
 const DashboardTabRoutes = createBottomTabNavigator(
   {
@@ -91,6 +112,7 @@ const DashboardTabRoutes = createBottomTabNavigator(
     Show,
     Ask,
     Jobs,
+    Later,
   },
   {
     initialRouteName: 'Front',
@@ -102,13 +124,15 @@ const DashboardTabRoutes = createBottomTabNavigator(
           const { routeName } = navigation.state;
           let iconName;
           if (routeName === 'Front') {
-            iconName = `ios-information-circle${focused ? '' : '-outline'}`;
+            iconName = `ios-book${focused ? '' : '-outline'}`;
           } else if (routeName === 'Show') {
-            iconName = `ios-options${focused ? '' : '-outline'}`;
+            iconName = `ios-bulb${focused ? '' : '-outline'}`;
           } else if (routeName === 'Ask') {
-            iconName = `ios-options${focused ? '' : '-outline'}`;
+            iconName = 'md-hand';
           } else if (routeName === 'Jobs') {
-            iconName = `ios-options${focused ? '' : '-outline'}`;
+            iconName = `ios-briefcase${focused ? '' : '-outline'}`;
+          } else if (routeName === 'Later') {
+            iconName = `ios-archive${focused ? '' : '-outline'}`;
           }
 
           // You can return any component that you like here! For demo we use an

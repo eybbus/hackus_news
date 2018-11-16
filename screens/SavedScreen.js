@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
-import NewsList from '../components/NewsList';
+import SavedList from '../components/SavedList';
 
 const styles = StyleSheet.create({
   container: {
@@ -10,12 +10,12 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class HomeScreen extends React.Component {
+export default class SavedScreen extends React.Component {
   static navigationOptions = {
-    title: 'Hackernews',
+    title: 'HN - Read later',
   };
 
   render() {
-    return <NewsList onNavigate={this.props.navigation.navigate} />;
+    return <SavedList />;
   }
 }

@@ -46,8 +46,6 @@ class NewsList extends React.Component {
   }
 
   getData() {
-    console.log('Fetching more news');
-
     this.page += 1;
     this.props.fetchNews(this.page);
   }
@@ -72,10 +70,6 @@ class NewsList extends React.Component {
   render() {
     const { news, isFetching, isFetchingMore } = this.props.store;
     const { hits, nbPages } = news;
-    /*     console.log(this.page);
-    console.log(Object.keys(news));
-    console.log(`nbHits: ${news.hits.length}`);
-    console.log(`nbPages: ${nbPages} - ` + `page: ${this.page}`); */
 
     if (isFetching) {
       return (
@@ -113,9 +107,6 @@ class NewsList extends React.Component {
 }
 
 function mapStateToProps(state) {
-  // console.log(state);
-  // console.log('-----------------------------------------------------');
-
   return {
     store: state.newsStore,
   };
