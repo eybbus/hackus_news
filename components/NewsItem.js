@@ -3,8 +3,11 @@ import {
   StyleSheet, Text, View, TouchableOpacity, Linking, AsyncStorage,
 } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FontAwesome } from '@expo/vector-icons';
+import { addToSavedList, removeFromSavedList } from '../actions/savedListActions';
 
 const styles = StyleSheet.create({
   container: {
@@ -69,7 +72,9 @@ class NewsItem extends React.Component {
     try {
       const savedStories = await AsyncStorage.getItem('SAVED_STORIES');
 
-      const stories = savedStories ? JSON.parse(savedStories).filter(obj => obj.id !== item.id) : [];
+      const stories = savedStories
+        ? JSON.parse(savedStories).filter(obj => obj.id !== item.id)
+        : [];
       try {
         AsyncStorage.setItem('SAVED_STORIES', JSON.stringify(stories));
       } catch (e) {
@@ -87,7 +92,11 @@ class NewsItem extends React.Component {
       <TouchableOpacity
         style={styles.container}
         onPress={() => this.openLink(item.url)}
-        onLongPress={removable ? () => this.removeLink(item) : () => this.saveLink(item)}
+        onLongPress={
+          removable
+            ? () => this.props.removeFromSavedList(item)
+            : () => this.props.addToSavedList(item)
+        }
       >
         <View style={styles.contentContainer}>
           <Text key="title" numberOfLines={2} style={styles.title}>
@@ -137,4 +146,13 @@ NewsItem.defaultProps = {
   removable: false,
 };
 
-export default withNavigation(NewsItem);
+function mapDispatchToProps(dispatch) {
+  return {
+    ...bindActionCreators({ addToSavedList, removeFromSavedList }, dispatch),
+  };
+}
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(withNavigation(NewsItem));

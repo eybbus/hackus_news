@@ -1,8 +1,8 @@
 import React from 'react';
-import {
-  FlatList, AsyncStorage, Text, StyleSheet,
-} from 'react-native';
-import PropTypes from 'prop-types';
+import { FlatList, Text, StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { fetchSavedList } from '../actions/savedListActions';
 import NewsItem from './NewsItem';
 import Color from '../constants/Colors';
 
@@ -19,24 +19,10 @@ const styles = StyleSheet.create({
 class SavedList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      savedStories: [],
-    };
-  }
-
-  componentWillMount() {}
-
-  async getSavedStories() {
-    try {
-      const savedStories = await AsyncStorage.getItem('SAVED_STORIES');
-      this.setState({ savedStories: savedStories ? JSON.parse(savedStories) : [] });
-    } catch (error) {
-      console.log('error occurred while getting storage');
-    }
   }
 
   componentDidMount() {
-    this.getSavedStories();
+    this.props.fetchSavedList();
   }
 
   customKeyExtractor(item) {
@@ -44,9 +30,8 @@ class SavedList extends React.Component {
   }
 
   render() {
-    const { savedStories } = this.state;
-
-    if (!savedStories.length) {
+    const { store } = this.props;
+    if (!store.savedList.length) {
       return (
         <Text style={styles.text}>
           {
@@ -57,7 +42,7 @@ class SavedList extends React.Component {
     }
     return (
       <FlatList
-        data={savedStories}
+        data={store.savedList}
         renderItem={({ item }) => <NewsItem item={item} removable />}
         keyExtractor={this.customKeyExtractor}
         refreshing={false}
@@ -71,6 +56,21 @@ class SavedList extends React.Component {
   }
 }
 
+function mapStateToProps(state) {
+  return {
+    store: state.savedListStore,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    ...bindActionCreators({ fetchSavedList }, dispatch),
+  };
+}
+
 SavedList.propTypes = {};
 
-export default SavedList;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(SavedList);
