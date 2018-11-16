@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     backgroundColor: Color.dropDownBackground,
   },
   dropdownDropdown: {
-    marginTop: -25,
+    marginTop: Layout.dropDownMarginTop,
     width: 100,
     height: 'auto',
   },
