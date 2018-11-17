@@ -33,8 +33,8 @@ export function fetchSavedList() {
 
 export function addToSavedList(item) {
   return (dispatch) => {
-    AsyncStorage.getItem('SAVED_STORIES').then((savedStories, err) => {
-      if (err) {
+    AsyncStorage.getItem('SAVED_STORIES').then((savedStories, getErr) => {
+      if (getErr) {
         console.log('failed to get stories');
       } else {
         const stories = savedStories ? JSON.parse(savedStories) : [];
@@ -59,8 +59,8 @@ export function addToSavedList(item) {
 
 export function removeFromSavedList(item) {
   return (dispatch) => {
-    AsyncStorage.getItem('SAVED_STORIES').then((savedStories, err) => {
-      if (err) {
+    AsyncStorage.getItem('SAVED_STORIES').then((savedStories, getErr) => {
+      if (getErr) {
         console.log('failed getting stories');
       } else {
         const stories = savedStories
@@ -68,6 +68,7 @@ export function removeFromSavedList(item) {
           : [];
         AsyncStorage.setItem('SAVED_STORIES', JSON.stringify(stories)).then((err) => {
           if (err) {
+            console.log('Failed removing story');
           } else {
             dispatch(removeFromSavedListSuccess(stories));
           }

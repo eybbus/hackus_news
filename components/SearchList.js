@@ -92,8 +92,8 @@ class SearchList extends React.Component {
     return `created_at_i>${unix}`;
   }
 
-  setupNews(item) {
-    return {
+  setupNews = (item) => {
+    const setupItem = {
       id: item.objectID,
       title: item.title,
       url: item.url,
@@ -102,11 +102,10 @@ class SearchList extends React.Component {
       commentAmount: item.num_comments,
       story: item.story_text,
     };
-  }
+    return setupItem;
+  };
 
-  customKeyExtractor(item) {
-    return item.objectID;
-  }
+  customKeyExtractor = item => item.objectID;
 
   fetchReset() {
     const unix = this.getNumerical();
@@ -138,11 +137,12 @@ class SearchList extends React.Component {
         onRefresh={() => this.fetchReset()}
         extraData={this.props}
         ListFooterComponent={
+          // eslint-disable-next-line no-nested-ternary
           isFetchingMore === true ? (
             <View style={styles.footerStyle}>
               <ActivityIndicator size="small" color={Color.activityIndicator} />
             </View>
-          ) : nbPages == this.page + 1 ? (
+          ) : nbPages === this.page + 1 ? (
             <TouchableHighlight style={styles.footerStyle}>
               <Text style={styles.footerText}>You reached the end!</Text>
             </TouchableHighlight>

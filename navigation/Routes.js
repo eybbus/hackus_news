@@ -144,21 +144,20 @@ const DashboardTabRoutes = createBottomTabNavigator(
       const { routeName, routes } = navigation.state;
       const params = routes && routes[1] && routes[1].params;
       return {
-        tabBarIcon: ({ focused, tintColor }) => {
-          const { routeName } = navigation.state;
+        tabBarIcon: ({ tintColor }) => {
           let iconName;
           if (routeName === 'Front') {
-            iconName = `ios-book${focused ? '' : '-outline'}`;
+            iconName = 'ios-book';
           } else if (routeName === 'Story') {
-            iconName = `ios-filing${focused ? '' : '-outline'}`;
+            iconName = 'ios-filing';
           } else if (routeName === 'Show') {
-            iconName = `ios-bulb${focused ? '' : '-outline'}`;
+            iconName = 'ios-bulb';
           } else if (routeName === 'Ask') {
             iconName = 'md-hand';
           } else if (routeName === 'Jobs') {
-            iconName = `ios-briefcase${focused ? '' : '-outline'}`;
+            iconName = 'ios-briefcase';
           } else if (routeName === 'Later') {
-            iconName = `ios-archive${focused ? '' : '-outline'}`;
+            iconName = 'ios-archive';
           }
 
           // You can return any component that you like here! For demo we use an

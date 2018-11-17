@@ -37,7 +37,8 @@ export default function searchReducer(state = initialSearchState, action) {
         search: { ...state.search, ...action.data },
       };
     case FETCHING_MORE_SEARCH__SUCCESS:
-      var type = Object.keys(action.data)[0];
+      // eslint-disable-next-line no-case-declarations
+      const type = Object.keys(action.data)[0];
       return {
         ...state,
         isFetchingMore: false,

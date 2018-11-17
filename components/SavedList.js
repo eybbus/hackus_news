@@ -11,20 +11,16 @@ const styles = StyleSheet.create({
     backgroundColor: Color.info,
     color: Color.infoText,
     fontSize: 16,
-    // fontWeight: 'bold',
     textAlign: 'center',
   },
 });
 
 class SavedList extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     this.props.fetchSavedList();
   }
 
+  // eslint-disable-next-line class-methods-use-this
   customKeyExtractor(item) {
     return item.id;
   }

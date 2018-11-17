@@ -87,11 +87,12 @@ class NewsList extends React.Component {
         onRefresh={() => this.fetchReset()}
         extraData={this.props}
         ListFooterComponent={
+          // eslint-disable-next-line no-nested-ternary
           isFetchingMore === true ? (
             <View style={styles.footerStyle}>
               <ActivityIndicator size="small" color={Color.activityIndicator} />
             </View>
-          ) : nbPages == this.page + 1 ? (
+          ) : nbPages === this.page + 1 ? (
             <TouchableHighlight style={styles.footerStyle}>
               <Text style={styles.footerText}>You reached the end!</Text>
             </TouchableHighlight>

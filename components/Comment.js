@@ -45,16 +45,14 @@ export default class Comment extends React.Component {
   }
 
   hideOnPress() {
-    this.setState({ hide: !this.state.hide });
+    const { hide } = this.state;
+    this.setState({ hide: !hide });
   }
 
   render() {
     let childComments = null;
     const { hide } = this.state;
     const { detail } = this.props;
-    if (detail.parent_id === detail.story_id) {
-      child = false;
-    }
     if (detail.children.length > 0) {
       childComments = detail.children.map(comment => (
         <View key={comment.id} style={styles.childContainer}>

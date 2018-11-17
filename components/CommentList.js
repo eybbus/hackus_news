@@ -53,10 +53,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const openLink = (_, href) => {
-  Linking.openURL(href).catch(err => console.error('An error occurred', err));
-};
-
 class CommentList extends React.Component {
   componentDidMount() {
     this.props.store.comments = [];
@@ -65,6 +61,7 @@ class CommentList extends React.Component {
     this.props.fetchComments(itemId);
   }
 
+  // eslint-disable-next-line class-methods-use-this
   openLink(url) {
     if (url !== null) {
       Linking.openURL(url).catch(err => console.error('An error occurred', err));
@@ -108,7 +105,7 @@ class CommentList extends React.Component {
               <Text style={styles.subText}>{content.url}</Text>
               {content.story.length > 0 ? (
                 <HTML
-                  onLinkPress={openLink}
+                  onLinkPress={(evt, href) => this.openLink(href)}
                   html={content.story}
                   containerStyle={styles.contentText}
                 />

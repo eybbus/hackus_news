@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  StyleSheet, Text, View, TouchableOpacity, Linking, AsyncStorage,
+  StyleSheet, Text, View, TouchableOpacity, Linking,
 } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { bindActionCreators } from 'redux';

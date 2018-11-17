@@ -51,14 +51,20 @@ export function fetchMoreSearch(pageNum) {
 }
 
 /**
- * @param {searchType}          string              Available types: { search: Sorted by relevance, then points, then number of comments. search_by_date: Sorted by date, more recent first}. Defaults to search
- * @param {tags}                String              Available tags: story, comment, poll, pollopt, show_hn, ask_hn, front_page, author_:USERNAME, story_:ID. Defaults to front_page
- * @param {pageNum}             string              page number. Defaults to 0
- * @param {numericFilters}      string               	filter on a specific numerical condition (<, <=, =, > or >=).
-                                                        Available numerical fields:
-                                                            created_at_i,
-                                                            points,
-                                                            num_comments.
+ * @param {searchType}          string    Available types: { search: Sorted by relevance,
+ *                                        then points, then number of comments.
+ *                                        search_by_date: Sorted by date, more recent first}.
+ *                                        Defaults to search
+ * @param {tags}                String    Available tags: story, comment, poll, pollopt,
+ *                                        show_hn, ask_hn, front_page, author_:USERNAME,
+ *                                        story_:ID. Defaults to front_page
+ * @param {pageNum}             string    page number. Defaults to 0
+ * @param {numericFilters}      string    filter on a specific numerical
+ *                                        condition (<, <=, =, > or >=).
+                                              Available numerical fields:
+                                                  created_at_i,
+                                                  points,
+                                                  num_comments.
  */
 export function fetchSearch(
   searchType = 'search',
