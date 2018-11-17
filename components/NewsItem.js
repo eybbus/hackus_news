@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FontAwesome } from '@expo/vector-icons';
+import FlashMessage, { showMessage, hideMessage } from 'react-native-flash-message';
 import { addToSavedList, removeFromSavedList } from '../actions/savedListActions';
 
 const styles = StyleSheet.create({
@@ -52,51 +53,25 @@ class NewsItem extends React.Component {
     }
   }
 
-  async saveLink(item) {
-    try {
-      const savedStories = await AsyncStorage.getItem('SAVED_STORIES');
-
-      const stories = savedStories ? JSON.parse(savedStories) : [];
-      stories.push(item);
-      try {
-        AsyncStorage.setItem('SAVED_STORIES', JSON.stringify(stories));
-      } catch (e) {
-        console.log('failed to save story');
-      }
-    } catch (e) {
-      console.log('failed to load storage');
-    }
-  }
-
-  async removeLink(item) {
-    try {
-      const savedStories = await AsyncStorage.getItem('SAVED_STORIES');
-
-      const stories = savedStories
-        ? JSON.parse(savedStories).filter(obj => obj.id !== item.id)
-        : [];
-      try {
-        AsyncStorage.setItem('SAVED_STORIES', JSON.stringify(stories));
-      } catch (e) {
-        console.log('failed to save story');
-      }
-    } catch (e) {
-      console.log('failed to load storage');
+  handleLongPress() {
+    const { item, removable } = this.props;
+    if (removable) {
+      this.props.removeFromSavedList(item);
+      showMessage({ message: 'Story removed to read later list!', type: 'success' });
+    } else {
+      this.props.addToSavedList(item);
+      showMessage({ message: 'Story added to read later list!', type: 'success' });
     }
   }
 
   render() {
-    const { item, removable } = this.props;
+    const { item } = this.props;
 
     return (
       <TouchableOpacity
         style={styles.container}
         onPress={() => this.openLink(item.url)}
-        onLongPress={
-          removable
-            ? () => this.props.removeFromSavedList(item)
-            : () => this.props.addToSavedList(item)
-        }
+        onLongPress={() => this.handleLongPress()}
       >
         <View style={styles.contentContainer}>
           <Text key="title" numberOfLines={2} style={styles.title}>

@@ -6,6 +6,7 @@ import {
 import {
   AppLoading, Asset, Font, Icon,
 } from 'expo';
+import FlashMessage from 'react-native-flash-message';
 import Routes from './navigation/Routes';
 import configureStore from './configureStore';
 
@@ -63,6 +64,7 @@ export default class App extends React.Component {
         <View style={styles.container}>
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
           <Routes />
+          <FlashMessage position="top" />
         </View>
       </Provider>
     );

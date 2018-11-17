@@ -32,8 +32,6 @@ export function fetchSavedList() {
 }
 
 export function addToSavedList(item) {
-  console.log('Really got here');
-
   return (dispatch) => {
     AsyncStorage.getItem('SAVED_STORIES').then((savedStories, err) => {
       if (err) {

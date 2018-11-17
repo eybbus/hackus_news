@@ -46,7 +46,7 @@ class SavedList extends React.Component {
         renderItem={({ item }) => <NewsItem item={item} removable />}
         keyExtractor={this.customKeyExtractor}
         refreshing={false}
-        onRefresh={() => this.getSavedStories()}
+        onRefresh={() => this.props.fetchSavedList()}
         ListHeaderComponent={
           <Text style={styles.text}> Press and hold to remove items from this list. </Text>
         }
