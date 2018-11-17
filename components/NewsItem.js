@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FontAwesome } from '@expo/vector-icons';
-import FlashMessage, { showMessage, hideMessage } from 'react-native-flash-message';
+import { showMessage } from 'react-native-flash-message';
 import { addToSavedList, removeFromSavedList } from '../actions/savedListActions';
 
 const styles = StyleSheet.create({

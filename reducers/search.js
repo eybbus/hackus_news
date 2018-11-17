@@ -9,6 +9,7 @@ import {
 const initialSearchState = {
   search: {
     show_hn: { hits: [] },
+    story: { hits: [] },
     ask_hn: { hits: [] },
     job: { hits: [] },
   },

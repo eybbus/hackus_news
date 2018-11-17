@@ -38,14 +38,20 @@ export function addToSavedList(item) {
         console.log('failed to get stories');
       } else {
         const stories = savedStories ? JSON.parse(savedStories) : [];
-        stories.push(item);
-        AsyncStorage.setItem('SAVED_STORIES', JSON.stringify(stories)).then((err) => {
-          if (err) {
-            console.log('Failed to save stories');
-          } else {
-            dispatch(addToSavedListSuccesss(stories));
-          }
-        });
+        console.log(item.id);
+
+        if (stories.filter(e => e.id === item.id).length > 0) {
+          dispatch(addToSavedListSuccesss(stories));
+        } else {
+          stories.push(item);
+          AsyncStorage.setItem('SAVED_STORIES', JSON.stringify(stories)).then((err) => {
+            if (err) {
+              console.log('Failed to save stories');
+            } else {
+              dispatch(addToSavedListSuccesss(stories));
+            }
+          });
+        }
       }
     });
   };

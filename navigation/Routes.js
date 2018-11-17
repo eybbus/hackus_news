@@ -6,12 +6,35 @@ import CommentList from '../components/CommentList';
 import ShowScreen from '../screens/ShowScreen';
 import AskScreen from '../screens/AskScreen';
 import JobsScreen from '../screens/JobsScreen';
-import SavedList from '../screens/SavedScreen';
+import StoryScreen from '../screens/StoryScreen';
+import SavedScreen from '../screens/SavedScreen';
+
 import Color from '../constants/Colors';
 
 const Front = createStackNavigator({
   Front: {
     screen: FrontScreen,
+    navigationOptions: {
+      headerLeft: null,
+      headerStyle: {
+        backgroundColor: Color.headerBackground,
+      },
+    },
+  },
+  CommentList: {
+    screen: CommentList,
+    navigationOptions: {
+      headerTitle: 'Comments',
+      headerStyle: {
+        backgroundColor: Color.headerBackground,
+      },
+    },
+  },
+});
+
+const Story = createStackNavigator({
+  Front: {
+    screen: StoryScreen,
     navigationOptions: {
       headerLeft: null,
       headerStyle: {
@@ -86,7 +109,7 @@ const Jobs = createStackNavigator({
 
 const Later = createStackNavigator({
   Later: {
-    screen: SavedList,
+    screen: SavedScreen,
     navigationOptions: {
       headerLeft: null,
       headerStyle: {
@@ -109,6 +132,7 @@ const Later = createStackNavigator({
 const DashboardTabRoutes = createBottomTabNavigator(
   {
     Front,
+    Story,
     Show,
     Ask,
     Jobs,
@@ -125,6 +149,8 @@ const DashboardTabRoutes = createBottomTabNavigator(
           let iconName;
           if (routeName === 'Front') {
             iconName = `ios-book${focused ? '' : '-outline'}`;
+          } else if (routeName === 'Story') {
+            iconName = `ios-filing${focused ? '' : '-outline'}`;
           } else if (routeName === 'Show') {
             iconName = `ios-bulb${focused ? '' : '-outline'}`;
           } else if (routeName === 'Ask') {
