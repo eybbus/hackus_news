@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import HTML from 'react-native-render-html';
 import Comments from './Comment';
-import { fetchComments } from '../actions/fetchComments';
+import fetchComments from '../actions/fetchComments';
 import Color from '../constants/Colors';
 
 const styles = StyleSheet.create({
