@@ -33,7 +33,7 @@ const Front = createStackNavigator({
 });
 
 const Story = createStackNavigator({
-  Front: {
+  Story: {
     screen: StoryScreen,
     navigationOptions: {
       headerLeft: null,
@@ -159,13 +159,9 @@ const DashboardTabRoutes = createBottomTabNavigator(
           } else if (routeName === 'Later') {
             iconName = 'ios-archive';
           }
-
-          // You can return any component that you like here! For demo we use an
-          // icon component from react-native-vector-icons
           return <Ionicons name={iconName} size={25} color={tintColor} />;
         },
         tabBarVisible: params && params.hideTabBar != null ? !params.hideTabBar : true,
-        swipeEnabled: params && params.hideTabBar != null ? !params.hideTabBar : true,
       };
     },
     tabBarOptions: {

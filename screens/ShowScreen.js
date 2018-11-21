@@ -37,7 +37,7 @@ export default class ShowScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
     return {
-      title: 'Hn - Show',
+      title: 'HN - Show',
       headerRight: (
         <ModalDropdown
           style={styles.dropdown}

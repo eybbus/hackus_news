@@ -38,9 +38,6 @@ export default class StoryScreen extends React.Component {
     const { params = {} } = navigation.state;
     return {
       title: 'HN - Story ',
-      headerStyle: {
-        backgroundColor: '#ff6600',
-      },
       headerRight: (
         <ModalDropdown
           style={styles.dropdown}
