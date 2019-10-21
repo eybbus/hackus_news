@@ -1,5 +1,9 @@
 # hackus_news
+
+This is an [Hacker news]() mobile app made with React Native. Using [hn algolia API](https://hn.algolia.com/api). A hacker news search api.
+
 ---
+
 ### Original assignment description
 
 The code that was turned in can be found under the [1.0 tag](https://github.com/eybbus/hackus_news/tree/1.0) .
